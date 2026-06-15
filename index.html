@@ -81,8 +81,10 @@ h1.title .lno{display:block;width:fit-content;margin:0 auto 14px;font-family:var
 
 .lead{font-size:18.5px;color:var(--ink-soft);margin:8px 0 20px;line-height:1.7;max-width:64ch}
 .goal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:14px;margin:18px 0}
-.goal{background:#fff;border:2.5px solid var(--ink);border-top-width:8px;border-top-color:var(--accent);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-sm);transition:.14s}
+.goal{background:#fff;border:2.5px solid var(--ink);border-top-width:8px;border-top-color:var(--accent);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-sm);transition:.14s;cursor:pointer;position:relative}
 .goal:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.go-arrow{position:absolute;top:13px;right:15px;font-family:var(--display);font-weight:700;color:var(--accent);font-size:19px;opacity:.5;transition:.14s}
+.goal:hover .go-arrow{opacity:1;transform:translateX(3px)}
 .goal h4{font-family:var(--display);font-size:16.5px;color:var(--ink);margin-bottom:7px;font-weight:600}
 .goal p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
 .warm{background:var(--amber-note);border:2.5px solid var(--ink);border-radius:14px;padding:22px 26px;margin-top:18px;box-shadow:var(--shadow)}
@@ -627,7 +629,7 @@ function buildL4(){
   return {key:'l4',accent:'#2C54E8',accentDeep:'#1A3CB8',
     meta:{lno:'Lesson 4',title:'Receiving Foreign Guests',zh:'接待外賓',sub:'Joseph &amp; Tonya｜Origin Publishers · Parts A–D'},
     overview:{lead:'本課情境：Joseph 到機場接待從加拿大 Origin 出版社來的客戶 Tonya，歷經機場接機、飯店入住、公司參訪到餐敘購物，學會接待外賓的整套商務英語與必考句型。',
-      goals:[['Part A','At the Airport 機場接機（mind + V-ing）'],['Part B','Accommodation 飯店入住'],['Part C','A Company Tour 公司參訪（look forward to）'],['Part D','Showing Hospitality 接待款待（either／prefer）'],['老師重點','luggage 單數、prefer A to B、職稱縮寫'],['測驗','60 題題庫＋限時隨機考']],
+      goals:[['Part A','At the Airport 機場接機（mind + V-ing）','dialogue'],['Part B','Accommodation 飯店入住','dialogue'],['Part C','A Company Tour 公司參訪（look forward to）','dialogue'],['Part D','Showing Hospitality 接待款待（either／prefer）','dialogue'],['老師重點','luggage 單數、prefer A to B、職稱縮寫','keypoints'],['測驗','60 題題庫＋限時隨機考','quiz']],
       warm:[['出國時你會帶哪些必備物品？'],['接待外國客戶你會先帶他們去哪裡？'],['到夜市買東西，你會殺價嗎？']]},
     parts,vocabGroups,phraseGroups,grammarHTML,cornerHTML:null,keyPoints,guest:'T',
     quiz:{bank:L4_QUESTIONS.map(q=>({type:q.type,stem:q.stem,options:q.options,answer:q.answer,explain:q.explain})),
@@ -686,7 +688,7 @@ function buildL5(){
   return {key:'l5',accent:'#0E9C84',accentDeep:'#0A6E5C',
     meta:{lno:'Lesson 5',title:'Meeting with Clients',zh:'與客戶會面',sub:'Donald &amp; Connie｜Harvest Furniture · Parts A–C'},
     overview:{lead:'本課情境：Donald 到 Harvest Furniture Corporation，先由 Rachel 介紹公司（Part A），再與業務 Connie 洽談辦公家具訂單、客製化與品管（Part B、C），並學會名詞與動詞單複數一致。',
-      goals:[['Part A','Company Introductions 公司介紹'],['Part B','Introducing Products & Services'],['Part C','Follow-up Questions 後續提問'],['文法','可數／不可數／恆複數＋量詞'],['句型','(be) committed to + V-ing'],['測驗','57 題題庫＋限時隨機考']],
+      goals:[['Part A','Company Introductions 公司介紹','dialogue'],['Part B','Introducing Products & Services','dialogue'],['Part C','Follow-up Questions 後續提問','dialogue'],['文法','可數／不可數／恆複數＋量詞','grammar'],['句型','(be) committed to + V-ing','vocab'],['測驗','57 題題庫＋限時隨機考','quiz']],
       warm:[['你的公司／學校是做什麼的？'],['若要訂家具，你會問業務什麼？'],['買到瑕疵品你會怎麼處理？']]},
     parts,vocabGroups,phraseGroups,grammarHTML,cornerHTML,
     keyPoints:L5_keyPoints,guest:'D',
@@ -765,7 +767,7 @@ function renderPanels(){
   html+=`<section class="panel active" id="panel-overview">
     <div class="sec-head"><span class="sec-no">01</span><h2>課程總覽 <span class="en-h">Overview</span></h2></div>
     <p class="lead">${les.overview.lead}</p>
-    <div class="goal-grid">${les.overview.goals.map(g=>`<div class="goal"><h4>${g[0]}</h4><p>${g[1]}</p></div>`).join('')}</div>
+    <div class="goal-grid">${les.overview.goals.map(g=>`<div class="goal"${g[2]?` onclick="goTab('${g[2]}')" role="button" tabindex="0"`:''}><h4>${g[0]}</h4><p>${g[1]}</p>${g[2]?'<span class="go-arrow">→</span>':''}</div>`).join('')}</div>
     <div class="warm"><h4>Get Ready ▶ 暖身討論</h4><ol>${les.overview.warm.map(w=>`<li>${w[0]}</li>`).join('')}</ol></div>
     <div class="toolbar" style="margin-top:16px"><button class="btn ghost" id="globalZh">隱藏全部中文（自我測驗）</button>
       <span style="font-size:12.5px;color:var(--ink-soft)">🔊 單字與句子可點喇叭朗讀（需網路）</span></div></section>`;
@@ -810,6 +812,8 @@ function applyHide(){
   const g=document.getElementById('globalZh'); if(g)g.textContent=hidden?'顯示全部中文':'隱藏全部中文（自我測驗）';
 }
 document.body.addEventListener('click',e=>{const s=e.target.closest('.spk');if(s)speak(s.dataset.say);});
+function goTab(p){const t=document.querySelector('.tab[data-p="'+p+'"]');if(t)t.click();}
+document.body.addEventListener('keydown',e=>{const g=e.target.closest('.goal[role="button"]');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();g.click();}});
 
 /* ============ quiz engine ============ */
 function bindQuiz(){
